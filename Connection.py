@@ -1,3 +1,4 @@
+# Connection.py
 from Node import Node, NodeType
 
 class Connection:

@@ -1,3 +1,4 @@
+# SampleNetwork.py
 from Node import Node, NodeType
 from Connection import Connection
 from Activations import ActivationFunctions
