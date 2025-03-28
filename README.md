@@ -23,13 +23,14 @@ cd NEAT-In-python
 ## File Structure
 ```
 NEAT-In-python/
-│── Activations.py        # Defines activation functions
-│── Connection.py         # Manages network connections
-│── Crossover.py          # Handles genetic crossover
-│── Mutate.py             # Implements mutation operations
-│── Network.py            # Defines the neural network structure
-│── Node.py               # Manages individual nodes (neurons)
-│── Phenotype.py          # Converts genotype into a working neural network
+|── NEAT/
+│──── Activations.py        # Defines activation functions
+│──── Connection.py         # Manages network connections
+│──── Crossover.py          # Handles genetic crossover
+│──── Mutate.py             # Implements mutation operations
+│──── Network.py            # Defines the neural network structure
+│──── Node.py               # Manages individual nodes (neurons)
+│──── Phenotype.py          # Converts genotype into a working neural network
 │── SampleNetwork.py      # Example usage of NEAT
 │── stanley.ec02.pdf      # Original NEAT research paper
 ```
