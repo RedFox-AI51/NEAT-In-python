@@ -1,12 +1,12 @@
 # SampleNetwork.py
-from Node import Node, NodeType
-from Connection import Connection
-from Activations import ActivationFunctions
+from NEAT.Node import Node, NodeType
+from NEAT.Connection import Connection
+from NEAT.Activations import ActivationFunctions
 
-from Network import Network
-from Mutate import Mutate
+from NEAT.Network import Network
+from NEAT.Mutate import Mutate
 
-from Phenotype import Phenotype
+from NEAT.Phenotype import Phenotype
 
 import random
 
@@ -16,7 +16,7 @@ nodes = [
     Node(1, NodeType.INPUT, round(random.uniform(-1.0, 1.0), 2)),  # Input Node 1
     Node(2, NodeType.INPUT, round(random.uniform(-1.0, 1.0), 2)),  # Input Node 2
     Node(3, NodeType.INPUT, round(random.uniform(-1.0, 1.0), 2)),  # Input Node 3
-    Node(4, NodeType.OUTPUT, 0.0, ActivationFunctions.Sigmoid),  # Output Node 1
+    Node(4, NodeType.OUTPUT, 0.5, ActivationFunctions.Sigmoid),  # Output Node 1
     Node(5, NodeType.HIDDEN, round(random.uniform(-1.0, 1.0), 2), ActivationFunctions.ReLu)  # Hidden Node with ReLU
 ]
 
@@ -49,7 +49,7 @@ print("\n")
 mutator = Mutate(network)
 
 # Mutate the network
-for i in range(5):
+for i in range(10):
     if random.randint(0,1):
         mutator.mutate_add_connection()
     else:

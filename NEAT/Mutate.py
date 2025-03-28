@@ -1,9 +1,9 @@
 # Mutate.py
-from Network import Network
-from Activations import ActivationFunctions
+from .Network import Network
+from .Activations import ActivationFunctions
 
-from Connection import Connection
-from Node import Node, NodeType
+from .Connection import Connection
+from .Node import Node, NodeType
 
 import random
 
@@ -17,7 +17,7 @@ class Mutate:
         nodes = self.network.nodes
         conns = self.network.conns
 
-        max_attempts = 100  # Avoid infinite loops when finding valid connections
+        max_attempts = 10  # Avoid infinite loops when finding valid connections
 
         for _ in range(max_attempts):
             from_node = random.choice(nodes)
@@ -47,17 +47,17 @@ class Mutate:
                     enabled=True
                 )
                 self.network.conns.append(new_conn)
-                print(f"Added connection: {from_node.id} ({from_node.ntype.value}) → {to_node.id} ({to_node.ntype.value})")
+                # print(f"Added connection: {from_node.id} ({from_node.ntype.value}) → {to_node.id} ({to_node.ntype.value})")
                 return  # Exit after adding one connection
 
-        print("Failed to find a valid connection to add.")
+        # print("Failed to find a valid connection to add.")
 
     def mutate_add_node(self):
         conns = self.network.conns
         nodes = self.network.nodes
 
         if not conns:
-            print("No connections to mutate.")
+            # print("No connections to mutate.")
             return
 
         # Pick a random connection to split
@@ -88,4 +88,4 @@ class Mutate:
         self.network.conns.append(new_conn_1)
         self.network.conns.append(new_conn_2)
 
-        print(f"Added node {new_node.id} and split connection {from_node.id} → {to_node.id}")
+        # print(f"Added node {new_node.id} and split connection {from_node.id} → {to_node.id}")

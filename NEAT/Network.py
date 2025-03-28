@@ -1,12 +1,9 @@
 # Network.py
-from Node import Node, NodeType
-from Connection import Connection
-import random
-
-# random.seed(72)
+from .Node import Node, NodeType
+from .Connection import Connection
 
 class Network:
-    def __init__(self, nodes: list[Node], conns: list[Node]):
+    def __init__(self, nodes: list[Node], conns: list[Connection]):
         for n in nodes:
             if not isinstance(n, Node):
                 raise TypeError("nodes are not of type Node")
@@ -16,6 +13,7 @@ class Network:
         
         self.nodes = nodes
         self.conns = conns
+        self.fitness = 0
 
     def run(self):
         """Run the network, processing connections and updating node values."""

@@ -1,5 +1,5 @@
 # Connection.py
-from Node import Node, NodeType
+from .Node import Node, NodeType
 
 class Connection:
     def __init__(self, Innov: int, weight: float, from_node: Node, to_node: Node, enabled: bool = True):
@@ -34,6 +34,7 @@ class Connection:
             weighted_input = self.from_node.get_output() * self.weight
             self.to_node.value += weighted_input
             return weighted_input  # Optional: return the weighted value transferred
+        
 
     def __repr__(self):
         return f"Connection(Innov={self.Innov}, From={self.from_node.id}, To={self.to_node.id}, Weight={self.weight}, Enabled={self.enabled})"

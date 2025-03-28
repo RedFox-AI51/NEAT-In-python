@@ -1,5 +1,5 @@
 # Crossover.py
-from Network import Network
+from .Network import Network
 
 class Crossover:
     def __init__(self):

@@ -1,7 +1,7 @@
 # Phenotype.py
-from Node import Node, NodeType
-from Connection import Connection
-from Network import Network
+from .Node import Node, NodeType
+from .Connection import Connection
+from .Network import Network
 
 # Import display libraries
 import matplotlib.pyplot as plt
