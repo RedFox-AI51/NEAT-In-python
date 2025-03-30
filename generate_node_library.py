@@ -1,6 +1,5 @@
 import json
 from NEAT.Activations import ActivationFunctions
-from NEAT.Node import Node, NodeType
 
 # Get all activation functions
 activation_functions = {name: func for name, func in vars(ActivationFunctions).items() if callable(func)}
