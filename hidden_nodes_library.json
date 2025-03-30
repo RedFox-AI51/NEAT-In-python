@@ -1,0 +1,38 @@
+[
+    {
+        "id": 10,
+        "type": "HIDDEN",
+        "value": 0.0,
+        "activation": "Sigmoid"
+    },
+    {
+        "id": 11,
+        "type": "HIDDEN",
+        "value": 0.0,
+        "activation": "ReLu"
+    },
+    {
+        "id": 12,
+        "type": "HIDDEN",
+        "value": 0.0,
+        "activation": "TanH"
+    },
+    {
+        "id": 13,
+        "type": "HIDDEN",
+        "value": 0.0,
+        "activation": "Sine"
+    },
+    {
+        "id": 14,
+        "type": "HIDDEN",
+        "value": 0.0,
+        "activation": "Linear"
+    },
+    {
+        "id": 15,
+        "type": "HIDDEN",
+        "value": 0.0,
+        "activation": "Gaussian"
+    }
+]
