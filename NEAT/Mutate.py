@@ -89,3 +89,8 @@ class Mutate:
         self.network.conns.append(new_conn_2)
 
         # print(f"Added node {new_node.id} and split connection {from_node.id} → {to_node.id}")
+
+    def mutate_weights(self):
+        for conn in self.network.conns:
+            if random.random() < 0.1:
+                conn.weight += random.uniform(-0.5, 0.5)

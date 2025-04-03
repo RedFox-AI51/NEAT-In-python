@@ -50,8 +50,10 @@ mutator = Mutate(network)
 
 # Mutate the network
 for i in range(10):
-    if random.randint(0,1):
+    if random.randint(0,2) == 0:
         mutator.mutate_add_connection()
+    elif random.randint(0,2) == 1:
+        mutator.mutate_weights()
     else:
         mutator.mutate_add_node()
 

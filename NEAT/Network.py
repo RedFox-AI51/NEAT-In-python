@@ -24,3 +24,7 @@ class Network:
     def get_output(self):
         """Return the output value of the output nodes."""
         return [node.get_output() for node in self.nodes if node.ntype == NodeType.OUTPUT]
+    
+    def get_output_nodes(self):
+        """Return the output nodes."""
+        return [node for node in self.nodes if node.ntype == NodeType.OUTPUT]
