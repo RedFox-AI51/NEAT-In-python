@@ -25,6 +25,22 @@ class Network:
         """Return the output value of the output nodes."""
         return [node.get_output() for node in self.nodes if node.ntype == NodeType.OUTPUT]
     
+    def get_input_nodes(self):
+        """Return the input nodes."""
+        return [node for node in self.nodes if node.ntype == NodeType.INPUT]
+    
+    def get_hidden_nodes(self):
+        """Return the hidden nodes."""
+        return [node for node in self.nodes if node.ntype == NodeType.HIDDEN]
+    
     def get_output_nodes(self):
         """Return the output nodes."""
         return [node for node in self.nodes if node.ntype == NodeType.OUTPUT]
+    
+    def summary(self):
+        return  "Nodes:\n" \
+                f"    Input shape: {len(self.get_input_nodes())}\n" \
+                f"    Output shape: {len(self.get_output_nodes())}\n" \
+                f"    Number of hidden nodes: {len(self.get_hidden_nodes())}\n" \
+                "Connections:\n" \
+                f"{[conn.__repr__() for conn in self.conns]}"

@@ -26,6 +26,9 @@ class Node:
         output = self.value + self.bias
         return self.activation(output) if self.activation else output
 
+    def copy(self):
+        return Node(self.id, self.ntype, self.value, self.activation)
+
 if __name__ == "__main__":
     # Example Usage
     import math

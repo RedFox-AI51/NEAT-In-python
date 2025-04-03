@@ -42,3 +42,6 @@ class Connection:
     def get_weighted_input(self):
         """Returns the weighted input value before it's transferred."""
         return self.from_node.get_output() * self.weight
+
+    def copy(self):
+        return Connection(self.Innov, self.weight, self.from_node, self.to_node, self.enabled)

@@ -92,5 +92,6 @@ class Mutate:
 
     def mutate_weights(self):
         for conn in self.network.conns:
-            if random.random() < 0.1:
-                conn.weight += random.uniform(-0.5, 0.5)
+            if conn.enabled:
+                if random.random() < 0.1:
+                    conn.weight += random.uniform(-0.5, 0.5)

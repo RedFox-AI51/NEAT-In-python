@@ -6,6 +6,7 @@ from .Network import Network
 # Import display libraries
 import matplotlib.pyplot as plt
 import networkx as nx
+import numpy as np
 
 
 class Phenotype:
@@ -20,34 +21,58 @@ class Phenotype:
 
         # Assign a color for each node type
         node_colors = {
-            NodeType.INPUT: 'lightgreen',   # Color for Input nodes
-            NodeType.OUTPUT: 'lightcoral',  # Color for Output nodes
-            NodeType.HIDDEN: 'lightblue'    # Color for Hidden nodes
+            NodeType.INPUT: 'lightgreen',   # Input nodes
+            NodeType.OUTPUT: 'lightcoral',  # Output nodes
+            NodeType.HIDDEN: 'lightblue'    # Hidden nodes
         }
 
-        # Add nodes to the graph with their colors
+        # Group nodes by type
+        input_nodes = [node for node in self.nodes if node.ntype == NodeType.INPUT]
+        hidden_nodes = [node for node in self.nodes if node.ntype == NodeType.HIDDEN]
+        output_nodes = [node for node in self.nodes if node.ntype == NodeType.OUTPUT]
+
+        # Create node positions
+        pos = {}
+
+        # Function to space nodes vertically
+        def place_nodes(layer_nodes, x_pos):
+            """Places nodes in a vertical column at the specified x position."""
+            n = len(layer_nodes)
+            if n == 1:
+                pos[layer_nodes[0].id] = (x_pos, 0)  # Center single node
+            else:
+                for i, node in enumerate(layer_nodes):
+                    y_pos = -i + (n - 1) / 2  # Center nodes vertically
+                    pos[node.id] = (x_pos, y_pos)
+
+        # Position input and output nodes
+        place_nodes(input_nodes, x_pos=0)     # Input layer (left)
+        place_nodes(output_nodes, x_pos=4)    # Output layer (right)
+
+        # Spread hidden nodes dynamically between inputs and outputs
+        if hidden_nodes:
+            num_hidden = len(hidden_nodes)
+            x_positions = np.linspace(1, 3, num_hidden)  # Spread hidden nodes between x=1 and x=3
+            for node, x in zip(hidden_nodes, x_positions):
+                pos[node.id] = (x, np.random.uniform(-len(hidden_nodes)/2, len(hidden_nodes)/2))  # Randomized Y position
+
+        # Add nodes to the graph
         for node in self.nodes:
             graph.add_node(node.id, label=node.ntype)
 
         # Add connections to the graph
         for connection in self.connections:
-            # Check if the connection is enabled or disabled
             if connection.enabled:
-                # For enabled connections, use solid lines
                 graph.add_edge(connection.from_node.id, connection.to_node.id, weight=connection.weight, style='solid')
             else:
-                # For disabled connections, use dotted red lines
                 graph.add_edge(connection.from_node.id, connection.to_node.id, weight=connection.weight, style='dotted')
-
-        # Use shell_layout for more organized positioning (concentric circles)
-        pos = nx.shell_layout(graph)  # Use Shell Layout for better organization
 
         # Separate edges by style
         edges = graph.edges()
         solid_edges = [(u, v) for u, v in edges if graph[u][v]['style'] == 'solid']
         dotted_edges = [(u, v) for u, v in edges if graph[u][v]['style'] == 'dotted']
 
-        # Draw nodes with respective colors based on node type
+        # Draw nodes with respective colors
         node_colors_list = [node_colors[node.ntype] for node in self.nodes]
         nx.draw(graph, pos, with_labels=True, node_size=700, node_color=node_colors_list, font_size=10)
 
@@ -62,6 +87,7 @@ class Phenotype:
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=labels)
 
         # Show plot
+        plt.title("Neural Network Visualization")
         plt.show()
 
 
