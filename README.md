@@ -49,7 +49,7 @@ python SampleNetwork.py
 
 ## References
 - [Original NEAT Paper by Kenneth O. Stanley](https://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf)
-- [NEAT Overview](http://www.cs.ucf.edu/~kstanley/neat.html)
+- [Better NEAT Explination](https://macwha.medium.com/evolving-ais-using-a-neat-algorithm-2d154c623828)
 
 ## License
 This project is open-source. Feel free to contribute or modify it as needed!
