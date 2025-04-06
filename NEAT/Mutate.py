@@ -13,6 +13,14 @@ class Mutate:
             raise TypeError("network is not of type Network")
         self.network = network
     
+    def random_mutation(self):
+        mutation_type = random.choice([self.mutate_add_connection, self.mutate_add_node, self.mutate_weights, self.mutate_remove_node])
+        mutation_type()
+    
+    def mutate(self, mutation_rate: float = 0.1):
+        if random.random() < mutation_rate:
+            self.random_mutation()
+    
     def mutate_add_connection(self):
         nodes = self.network.nodes
         conns = self.network.conns
@@ -52,7 +60,6 @@ class Mutate:
                 return  # Exit after adding one connection
 
         # print("Failed to find a valid connection to add.")
-
 
     def mutate_add_node(self):
         conns = self.network.conns
@@ -97,3 +104,16 @@ class Mutate:
             if conn.enabled:
                 if random.random() < 0.1:
                     conn.weight += random.uniform(-0.5, 0.5)
+    
+    def mutate_remove_node(self):
+        # Remove a random hidden node
+        hidden_nodes = [node for node in self.network.nodes if node.ntype == NodeType.HIDDEN]
+        if not hidden_nodes:
+            # print("No hidden nodes to remove.")
+            return
+        node_to_remove = random.choice(hidden_nodes)
+        self.network.nodes.remove(node_to_remove)
+
+        # Remove connections associated with the node
+        self.network.conns = [conn for conn in self.network.conns if conn.from_node != node_to_remove and conn.to_node != node_to_remove]
+        # print(f"Removed node {node_to_remove.id} and its associated connections.")
