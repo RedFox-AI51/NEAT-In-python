@@ -63,24 +63,26 @@ class Phenotype:
         # Add connections to the graph
         for connection in self.connections:
             if connection.enabled:
-                graph.add_edge(connection.from_node.id, connection.to_node.id, weight=connection.weight, style='solid')
+                graph.add_edge(connection.from_node.id, connection.to_node.id, weight=connection.weight, style=('solid_g' if connection.weight > 0 else 'solid_r'))
             else:
                 graph.add_edge(connection.from_node.id, connection.to_node.id, weight=connection.weight, style='dotted')
 
         # Separate edges by style
         edges = graph.edges()
-        solid_edges = [(u, v) for u, v in edges if graph[u][v]['style'] == 'solid']
+        solid_edges_g = [(u, v) for u, v in edges if graph[u][v]['style'] == 'solid_g']
+        solid_edges_r = [(u, v) for u, v in edges if graph[u][v]['style'] == 'solid_r']
         dotted_edges = [(u, v) for u, v in edges if graph[u][v]['style'] == 'dotted']
 
         # Draw nodes with respective colors
         node_colors_list = [node_colors[node.ntype] for node in self.nodes]
         nx.draw(graph, pos, with_labels=True, node_size=700, node_color=node_colors_list, font_size=10)
 
-        # Draw solid edges in black
-        nx.draw_networkx_edges(graph, pos, edgelist=solid_edges, edge_color='black', style='solid')
+        # Draw solid edges in green and red
+        nx.draw_networkx_edges(graph, pos, edgelist=solid_edges_g, edge_color='lime', style='solid')
+        nx.draw_networkx_edges(graph, pos, edgelist=solid_edges_r, edge_color='red', style='solid')
 
         # Draw dotted edges in red
-        nx.draw_networkx_edges(graph, pos, edgelist=dotted_edges, edge_color='red', style='dotted')
+        nx.draw_networkx_edges(graph, pos, edgelist=dotted_edges, edge_color='lightgray', style='dotted')
 
         # Draw edge labels (weights)
         labels = nx.get_edge_attributes(graph, 'weight')
@@ -108,13 +110,13 @@ if __name__ == "__main__":
 
     # Initialize connections
     conns = [
-        Connection(1, 0.7, nodes[0], nodes[3], True),  # Node 1 → Node 3
-        Connection(2, -0.5, nodes[1], nodes[3], False),  # Node 2 → Node 3 (Disabled)
-        Connection(3, 0.5, nodes[2], nodes[3], True),  # Node 3 → Node 3
-        Connection(4, 0.2, nodes[1], nodes[4], True),  # Node 2 → Node 4
-        Connection(5, 0.4, nodes[4], nodes[3], True),  # Node 4 → Node 3
-        Connection(6, 0.6, nodes[0], nodes[4], True),  # Node 1 → Node 4
-        Connection(11, 0.6, nodes[3], nodes[4], True),  # Node 3 → Node 4
+        Connection(1, round(random.uniform(-2.0, 2.0), 2), nodes[0], nodes[3], True),  # Node 1 → Node 3
+        Connection(2, round(random.uniform(-2.0, 2.0), 2), nodes[1], nodes[3], False),  # Node 2 → Node 3 (Disabled)
+        Connection(3, round(random.uniform(-2.0, 2.0), 2), nodes[2], nodes[3], True),  # Node 3 → Node 3
+        Connection(4, round(random.uniform(-2.0, 2.0), 2), nodes[1], nodes[4], True),  # Node 2 → Node 4
+        Connection(5, round(random.uniform(-2.0, 2.0), 2), nodes[4], nodes[3], True),  # Node 4 → Node 3
+        Connection(6, round(random.uniform(-2.0, 2.0), 2), nodes[0], nodes[4], True),  # Node 1 → Node 4
+        Connection(11, round(random.uniform(-2.0, 2.0), 2), nodes[3], nodes[4], True),  # Node 3 → Node 4
     ]
 
     # Create a Phenotype instance

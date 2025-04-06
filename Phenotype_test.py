@@ -19,13 +19,13 @@ nodes = [
 
 # Initialize connections
 conns = [
-    Connection(1, 0.7, nodes[0], nodes[3], True),  # Node 1 → Node 3
-    Connection(2, -0.5, nodes[1], nodes[3], False),  # Node 2 → Node 3 (Disabled)
-    Connection(3, 0.5, nodes[2], nodes[3], True),  # Node 3 → Node 3
-    Connection(4, 0.2, nodes[1], nodes[4], True),  # Node 2 → Node 4
-    Connection(5, 0.4, nodes[4], nodes[3], True),  # Node 4 → Node 3
-    Connection(6, 0.6, nodes[0], nodes[4], True),  # Node 1 → Node 4
-    Connection(11, 0.6, nodes[3], nodes[4], True),  # Node 3 → Node 4
+    Connection(1, round(random.uniform(-2.0, 2.0), 2), nodes[0], nodes[3], True),  # Node 1 → Node 3
+    Connection(2, round(random.uniform(-2.0, 2.0), 2), nodes[1], nodes[3], False),  # Node 2 → Node 3 (Disabled)
+    Connection(3, round(random.uniform(-2.0, 2.0), 2), nodes[2], nodes[3], True),  # Node 3 → Node 3
+    Connection(4, round(random.uniform(-2.0, 2.0), 2), nodes[1], nodes[4], True),  # Node 2 → Node 4
+    Connection(5, round(random.uniform(-2.0, 2.0), 2), nodes[4], nodes[3], True),  # Node 4 → Node 3
+    Connection(6, round(random.uniform(-2.0, 2.0), 2), nodes[0], nodes[4], True),  # Node 1 → Node 4
+    Connection(11, round(random.uniform(-2.0, 2.0), 2), nodes[3], nodes[4], True),  # Node 3 → Node 4
 ]
 
 # Create a Phenotype instance
