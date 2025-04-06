@@ -1,7 +1,7 @@
 # Mutate.py
 from .Network import Network
 from .Activations import ActivationFunctions
-
+from .InnovationTracker import tracker
 from .Connection import Connection
 from .Node import Node, NodeType
 
@@ -39,18 +39,20 @@ class Mutate:
                 continue
 
             if valid_connection:
+                # Use the innovation tracker to get a consistent innovation number
+                innov = tracker.get_innovation(from_node.id, to_node.id)
                 new_conn = Connection(
-                    Innov=len(conns) + 1,  # Simple innovation number increment
-                    weight=round(random.uniform(-1.0, 1.0), 2),  # Random weight
+                    Innov=innov,
+                    weight=round(random.uniform(-1.0, 1.0), 2),
                     from_node=from_node,
                     to_node=to_node,
                     enabled=True
                 )
                 self.network.conns.append(new_conn)
-                # print(f"Added connection: {from_node.id} ({from_node.ntype.value}) → {to_node.id} ({to_node.ntype.value})")
                 return  # Exit after adding one connection
 
         # print("Failed to find a valid connection to add.")
+
 
     def mutate_add_node(self):
         conns = self.network.conns
