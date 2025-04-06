@@ -37,6 +37,9 @@ def fitness_function(network: Network) -> float:
     expected_outputs = [0, 1, 1, 0]
     fitness = 0.0
 
+    for node in network.nodes:
+        node.value = 0.0
+
     for i, (input_1, input_2) in enumerate(inputs):
         network.nodes[0].value = input_1
         network.nodes[1].value = input_2

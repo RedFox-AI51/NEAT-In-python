@@ -44,3 +44,9 @@ class Network:
                 f"    Number of hidden nodes: {len(self.get_hidden_nodes())}\n" \
                 "Connections:\n" \
                 f"{[conn.__repr__() for conn in self.conns]}"
+
+    def copy(self):
+        """Create a deep copy of the network."""
+        copied_nodes = [node.copy() for node in self.nodes]
+        copied_conns = [conn.copy() for conn in self.conns]
+        return Network(copied_nodes, copied_conns)

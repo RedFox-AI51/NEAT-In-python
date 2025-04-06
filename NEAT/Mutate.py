@@ -14,12 +14,21 @@ class Mutate:
         self.network = network
     
     def random_mutation(self):
-        mutation_type = random.choice([self.mutate_add_connection, self.mutate_add_node, self.mutate_weights, self.mutate_remove_node])
+        mutation_type = random.choice([
+            self.mutate_add_connection,
+            self.mutate_add_node,
+            self.mutate_weights
+        ])
         mutation_type()
     
     def mutate(self, mutation_rate: float = 0.1):
         if random.random() < mutation_rate:
-            self.random_mutation()
+            if random.randint(0,2) == 0:
+                self.mutate_add_connection()
+            elif random.randint(0,2) == 1:
+                self.mutate_add_node()
+            else:
+                self.mutate_weights()
     
     def mutate_add_connection(self):
         nodes = self.network.nodes
@@ -87,7 +96,7 @@ class Mutate:
         # - from `from_node` to the new node
         # - from the new node to `to_node`
         weight_1 = round(random.uniform(-1.0, 1.0), 2)
-        weight_2 = round(random.uniform(-1.0, 1.0), 2)
+        weight_2 = conn.weight
         innov_1 = len(self.network.conns) + 1
         innov_2 = innov_1 + 1
         
@@ -103,17 +112,4 @@ class Mutate:
         for conn in self.network.conns:
             if conn.enabled:
                 if random.random() < 0.1:
-                    conn.weight += random.uniform(-0.5, 0.5)
-    
-    def mutate_remove_node(self):
-        # Remove a random hidden node
-        hidden_nodes = [node for node in self.network.nodes if node.ntype == NodeType.HIDDEN]
-        if not hidden_nodes:
-            # print("No hidden nodes to remove.")
-            return
-        node_to_remove = random.choice(hidden_nodes)
-        self.network.nodes.remove(node_to_remove)
-
-        # Remove connections associated with the node
-        self.network.conns = [conn for conn in self.network.conns if conn.from_node != node_to_remove and conn.to_node != node_to_remove]
-        # print(f"Removed node {node_to_remove.id} and its associated connections.")
+                    conn.weight = random.uniform(-2.0, 2.0)
