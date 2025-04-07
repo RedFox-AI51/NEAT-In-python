@@ -15,8 +15,8 @@ MUTATION_RATE = 0.1  # Mutation rate for the NEAT algorithm
 nodes = [
     Node(1, NodeType.INPUT, 0.0),   # Input node 1
     Node(2, NodeType.INPUT, 0.0),   # Input node 2
-    Node(3, NodeType.OUTPUT, 0.0),  # Output node
-    Node(4, NodeType.HIDDEN, 0.0)   # Hidden node
+    Node(3, NodeType.OUTPUT, 0.0, ActivationFunctions.TanH),  # Output node
+    Node(4, NodeType.HIDDEN, 0.0, ActivationFunctions.ReLu)   # Hidden node
 ]
 
 # Define the connections (from inputs to hidden, hidden to output)
@@ -58,40 +58,68 @@ def create_population(pop_size: int) -> list:
         population.append(genome)
     return population
 
-# Main evolution loop
-genomes: list[NEAT] = create_population(POPULATION_SIZE)
-best_fitnesses = []
-avg_fitnesses = []
+# Store the results for each iteration
+iteration_best_fitnesses = []
+iteration_avg_fitnesses = []
 
-for gen in range(GENERATIONS):
-    gen_fitnesses = []
-    for genome in genomes:
-        fitness = fitness_function(genome.network)
-        gen_fitnesses.append(fitness)
-        genome.mutate(MUTATION_RATE)
+# Add a flag to show or hide the graphs
+SHOW_GRAPHS = True  # Set to False to hide the graphs
 
-    avg_fitness = sum(gen_fitnesses) / len(gen_fitnesses)
-    best_fitness = max(gen_fitnesses)
+for itteration in range(3):
+    # Main evolution loop
+    genomes: list[NEAT] = create_population(POPULATION_SIZE)
+    best_fitnesses = []
+    avg_fitnesses = []
 
-    avg_fitnesses.append(avg_fitness)
-    best_fitnesses.append(best_fitness)
+    for gen in range(GENERATIONS):
+        gen_fitnesses = []
+        for genome in genomes:
+            fitness = fitness_function(genome.network)
+            gen_fitnesses.append(fitness)
+            genome.mutate(MUTATION_RATE)
 
-    best_genome = genomes[gen_fitnesses.index(best_fitness)]
-    print(f"Generation {gen}: Avg Fitness = {avg_fitness:.4f}, Best Fitness = {best_fitness:.4f}")
+        avg_fitness = sum(gen_fitnesses) / len(gen_fitnesses)
+        best_fitness = max(gen_fitnesses)
 
-# Final result
-print("\n=== Final Network ===")
-# best_genome.phenotype.visualize()
-# print(best_genome.network.summary())
+        avg_fitnesses.append(avg_fitness)
+        best_fitnesses.append(best_fitness)
 
-# Plotting fitness over generations
-plt.figure(figsize=(10, 5))
-plt.plot(avg_fitnesses, label="Average Fitness", color="blue")
-plt.plot(best_fitnesses, label="Best Fitness", color="green")
-plt.title("Fitness Over Generations")
-plt.xlabel("Generation")
-plt.ylabel("Fitness")
-plt.grid(True)
-plt.legend()
-plt.tight_layout()
-plt.show()
+        best_genome = genomes[gen_fitnesses.index(best_fitness)]
+        print(f"Iteration:{itteration} Generation {gen}: Avg Fitness = {avg_fitness:.4f}, Best Fitness = {best_fitness:.4f}")
+
+    # Store the results for this iteration
+    iteration_best_fitnesses.append(best_fitnesses)
+    iteration_avg_fitnesses.append(avg_fitnesses)
+
+    # Final result
+    print("\n=== Final Network ===")
+    # best_genome.phenotype.visualize()
+    # print(best_genome.network.summary())
+
+    # Plotting fitness over generations for this iteration
+    if SHOW_GRAPHS:
+        plt.figure(figsize=(10, 5))
+        plt.plot(avg_fitnesses, label="Average Fitness", color="blue")
+        plt.plot(best_fitnesses, label="Best Fitness", color="green")
+        plt.title(f"Iteration:{itteration} Fitness Over {GENERATIONS} Generations | Population size: {POPULATION_SIZE}")
+        plt.xlabel("Generation")
+        plt.ylabel("Fitness")
+        plt.grid(True)
+        plt.legend()
+        plt.tight_layout()
+        plt.show()
+
+# Plotting the differences between iterations (only if SHOW_GRAPHS is True)
+if SHOW_GRAPHS:
+    plt.figure(figsize=(10, 5))
+    for itteration in range(3):
+        plt.plot(iteration_avg_fitnesses[itteration], label=f"Avg Fitness Iteration {itteration}", linestyle='--')
+        plt.plot(iteration_best_fitnesses[itteration], label=f"Best Fitness Iteration {itteration}")
+
+    plt.title("Fitness Comparison Between Iterations")
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness")
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()

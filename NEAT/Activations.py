@@ -12,7 +12,7 @@ class ActivationFunctions:
 
     @staticmethod
     def TanH(x):
-        return (math.exp(x) - math.exp(-x)) / (math.exp(x) + math.exp(-x))
+        return math.tanh(x)
 
     @staticmethod
     def Sine(x):
