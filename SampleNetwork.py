@@ -37,8 +37,7 @@ phenotype_1 = Phenotype(mutator.network)
 phenotype_1.visualize()
 
 # Process connections in correct order
-for conn in network.conns:
-    conn.forward()
+network.run()
 
 # Print final values
 for node in network.nodes:
@@ -60,8 +59,7 @@ for i in range(10):
 print("\n")
 
 # Process connections in correct order (After Mutation)
-for conn in network.conns:
-    conn.forward()
+network.run()
 
 # Print final values (After Mutation)
 for node in network.nodes:
