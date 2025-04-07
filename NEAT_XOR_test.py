@@ -1,15 +1,14 @@
+import plotly.graph_objects as go
 from NEAT.NEAT import NEAT
 from NEAT.Network import Network
 from NEAT.Node import Node, NodeType
 from NEAT.Connection import Connection
 from NEAT.Activations import ActivationFunctions
 
-import matplotlib.pyplot as plt
-
 # Constants
 POPULATION_SIZE = 10  # Size of the population
 GENERATIONS = 100  # Number of generations to evolve
-MUTATION_RATE = 0.1  # Mutation rate for the NEAT algorithm
+MUTATION_RATE = 0.7  # Mutation rate for the NEAT algorithm
 
 # Define the nodes in the preferred order: input, output, hidden
 nodes = [
@@ -62,10 +61,7 @@ def create_population(pop_size: int) -> list:
 iteration_best_fitnesses = []
 iteration_avg_fitnesses = []
 
-# Add a flag to show or hide the graphs
-SHOW_GRAPHS = True  # Set to False to hide the graphs
-
-for itteration in range(3):
+for itteration in range(2):
     # Main evolution loop
     genomes: list[NEAT] = create_population(POPULATION_SIZE)
     best_fitnesses = []
@@ -91,35 +87,35 @@ for itteration in range(3):
     iteration_best_fitnesses.append(best_fitnesses)
     iteration_avg_fitnesses.append(avg_fitnesses)
 
-    # Final result
-    print("\n=== Final Network ===")
-    # best_genome.phenotype.visualize()
-    # print(best_genome.network.summary())
+# Create interactive plot using plotly
+fig = go.Figure()
 
-    # Plotting fitness over generations for this iteration
-    if SHOW_GRAPHS:
-        plt.figure(figsize=(10, 5))
-        plt.plot(avg_fitnesses, label="Average Fitness", color="blue")
-        plt.plot(best_fitnesses, label="Best Fitness", color="green")
-        plt.title(f"Iteration:{itteration} Fitness Over {GENERATIONS} Generations | Population size: {POPULATION_SIZE}")
-        plt.xlabel("Generation")
-        plt.ylabel("Fitness")
-        plt.grid(True)
-        plt.legend()
-        plt.tight_layout()
-        plt.show()
+# Add traces for each iteration (Avg Fitness and Best Fitness)
+for itteration in range(1):
+    fig.add_trace(go.Scatter(
+        x=list(range(GENERATIONS)),
+        y=iteration_avg_fitnesses[itteration],
+        mode='lines',
+        name=f"Avg Fitness Iteration {itteration}",
+        line=dict(dash='dash')
+    ))
 
-# Plotting the differences between iterations (only if SHOW_GRAPHS is True)
-if SHOW_GRAPHS:
-    plt.figure(figsize=(10, 5))
-    for itteration in range(3):
-        plt.plot(iteration_avg_fitnesses[itteration], label=f"Avg Fitness Iteration {itteration}", linestyle='--')
-        plt.plot(iteration_best_fitnesses[itteration], label=f"Best Fitness Iteration {itteration}")
+    fig.add_trace(go.Scatter(
+        x=list(range(GENERATIONS)),
+        y=iteration_best_fitnesses[itteration],
+        mode='lines',
+        name=f"Best Fitness Iteration {itteration}",
+        line=dict(dash='solid')
+    ))
 
-    plt.title("Fitness Comparison Between Iterations")
-    plt.xlabel("Generation")
-    plt.ylabel("Fitness")
-    plt.grid(True)
-    plt.legend()
-    plt.tight_layout()
-    plt.show()
+# Update layout for the plot
+fig.update_layout(
+    title="Fitness Comparison Between Iterations",
+    xaxis_title="Generation",
+    yaxis_title="Fitness",
+    legend_title="Fitness Type",
+    template="plotly_dark"
+)
+
+# Show the interactive plot
+fig.show()
