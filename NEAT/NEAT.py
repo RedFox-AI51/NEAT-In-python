@@ -17,3 +17,7 @@ class NEAT:
     def mutate(self, mutation_rate: float = 0.1):
         # Apply mutation to the network
         self.mutator.mutate(mutation_rate)
+    
+    def copy(self):
+        # Create a deep copy of the NEAT instance
+        return NEAT(self.network.copy())

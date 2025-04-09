@@ -15,6 +15,9 @@ class Crossover:
             return self._crossover_instance_1(parent_1, parent_2)
         elif parent_2.fitness > parent_1.fitness:
             return self._crossover_instance_2(parent_1, parent_2)
+        else:
+            # If both parents have the same fitness, randomly choose one
+            return random.choice([self._crossover_instance_1(parent_1, parent_2), self._crossover_instance_2(parent_1, parent_2)])
 
     def _crossover_instance_1(self, parent_1: Network, parent_2: Network):
         """
@@ -163,8 +166,8 @@ class Crossover:
         innov_1 = sorted(conn.Innov for conn in parent_1.conns)
         innov_2 = sorted(conn.Innov for conn in parent_2.conns)
 
-        print(f"Parent 1 Innovations: {innov_1}")
-        print(f"Parent 2 Innovations: {innov_2}")
+        # print(f"Parent 1 Innovations: {innov_1}")
+        # print(f"Parent 2 Innovations: {innov_2}")
 
         max_innov_1 = max(innov_1, default=0)
         max_innov_2 = max(innov_2, default=0)
@@ -180,7 +183,7 @@ class Crossover:
             else:
                 disjoint.append(innov)
         
-        print(f"Disjoint Genes: {disjoint}")
-        print(f"Excess Genes: {excess}")
+        # print(f"Disjoint Genes: {disjoint}")
+        # print(f"Excess Genes: {excess}")
 
         return (disjoint, excess)

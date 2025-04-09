@@ -14,12 +14,50 @@ class Network:
         self.nodes = nodes
         self.conns = conns
         self.fitness = 0
+        self.processed_nodes = set()  # Keep track of processed nodes during input propagation
 
     def run(self):
-        """Run the network, processing connections and updating node values."""
-        # Process connections
-        for conn in self.conns:
-            conn.forward()
+        """Run the network, processing connections layer by layer using pass_input."""
+        # Reset non-input nodes before propagation
+        for node in self.nodes:
+            if node.ntype != NodeType.INPUT:
+                node.value = 0  # Reset to prevent residual values
+
+        # Feed the input nodes using pass_input
+        input_nodes = self.get_input_nodes()
+        self.processed_nodes.clear()  # Reset the processed nodes set for each run
+        
+        for in_node in input_nodes:
+            self.pass_input(in_node)
+
+        # After propagating input, activate hidden and output nodes
+        for node in self.nodes:
+            if node.ntype != NodeType.INPUT:
+                # Only update non-input nodes that have incoming connections
+                if any(conn.to_node == node for conn in self.conns if conn.enabled):
+                    node.value = node.get_output()  # Process activation if it has inputs
+                else:
+                    node.value = 0  # No input? Output stays 0
+
+    def pass_input(self, in_node: Node):
+        """Feed forward 1 node at a time, processing connections from an individual input node."""
+        # If the node has already been processed, return immediately to prevent recursion
+        if in_node in self.processed_nodes:
+            return
+
+        self.processed_nodes.add(in_node)  # Mark this node as processed
+
+        conns = self.conns
+        in_value = in_node.get_output()
+
+        for conn in conns:
+            if conn.from_node == in_node and conn.enabled:
+                to_node = conn.to_node
+                to_node.value += in_value * conn.weight  # Propagate input value
+
+                # Only propagate further if the node is not an input node
+                if to_node.ntype != NodeType.INPUT:
+                    self.pass_input(to_node)  # Propagate further if necessary
     
     def get_output(self):
         """Return the output value of the output nodes."""
