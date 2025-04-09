@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import random
 import plotly.graph_objects as go
 from NEAT.NEAT import NEAT
@@ -6,8 +10,6 @@ from NEAT.Node import Node, NodeType
 from NEAT.Connection import Connection
 from NEAT.Activations import ActivationFunctions
 from NEAT.Crossover import Crossover
-
-import time
 
 # Constants
 POPULATION_SIZE = 10  # Size of the population
@@ -20,14 +22,14 @@ nodes = [
     Node(1, NodeType.INPUT, 0.0),   # Input node 1
     Node(2, NodeType.INPUT, 0.0),   # Input node 2
     Node(3, NodeType.OUTPUT, 0.0, ActivationFunctions.TanH),  # Output node
-    Node(4, NodeType.HIDDEN, 0.0, ActivationFunctions.ReLu)   # Hidden node
+    Node(4, NodeType.HIDDEN, 0.0, ActivationFunctions.TanH),  # Hidden node
 ]
 
 # Define the connections (from inputs to hidden, hidden to output)
 conns = [
-    Connection(Innov=1, weight=0.5, from_node=nodes[0], to_node=nodes[3], enabled=True),  # Input 1 -> Hidden
-    Connection(Innov=2, weight=0.5, from_node=nodes[1], to_node=nodes[3], enabled=True),  # Input 2 -> Hidden
-    Connection(Innov=3, weight=0.8, from_node=nodes[3], to_node=nodes[2], enabled=True)   # Hidden -> Output
+    Connection(Innov=1, weight=0.5, from_node=nodes[0], to_node=nodes[3], enabled=True),  # Input 1 to Hidden
+    Connection(Innov=2, weight=0.5, from_node=nodes[1], to_node=nodes[3], enabled=True),  # Input 2 to Hidden
+    Connection(Innov=3, weight=0.8, from_node=nodes[3], to_node=nodes[2], enabled=True),  # Hidden to Output
 ]
 
 cross = Crossover()
@@ -128,7 +130,10 @@ genomes: list[NEAT] = create_population(POPULATION_SIZE)
 best_fitnesses = []
 avg_fitnesses = []
 
+genomes[0].phenotype.visualize()
+
 for gen in range(GENERATIONS):
+    
     gen_fitnesses = []
     for genome in genomes:
         fitness = fitness_function(genome.network)
@@ -148,9 +153,45 @@ for gen in range(GENERATIONS):
     # Reset the fitnesses of the genomes
     for genome in genomes:
         genome.network.fitness = 0.0
-
+    
     # Shuffle the genomes
     random.shuffle(genomes)
+
+
+# Save the fitness data to a text file
+output_path = "fitness_summary.txt"
+with open(output_path, "w") as f:
+    f.write("gen | avg | best\n")
+    for gen in range(GENERATIONS):
+        f.write(f"{gen} | {avg_fitnesses[gen]:.4f} | {best_fitnesses[gen]:.4f}\n")
+
+print(f"Fitness summary saved to {output_path}")
+
+# Save the best genome to a file
+best_genome_path = "best_genome.txt"
+with open(best_genome_path, "w") as f:
+    f.write(str(best_genome.network.summary()))
+
+import matplotlib.pyplot as plt
+
+# Create a matplotlib plot for saving as PNG
+plt.figure(figsize=(10, 6))
+plt.plot(range(GENERATIONS), avg_fitnesses, label='Avg Fitness', linestyle='--')
+plt.plot(range(GENERATIONS), best_fitnesses, label='Best Fitness', linestyle='-')
+plt.title('Fitness Comparison Between Iterations')
+plt.xlabel('Generation')
+plt.ylabel('Fitness')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+
+# Save as PNG
+plt.savefig('fitness_plot.png')
+print("Fitness plot saved as fitness_plot.png")
+
+# Optional: close the plot if not displaying interactively
+plt.close()
+
 
 # Create interactive plot using plotly
 fig = go.Figure()

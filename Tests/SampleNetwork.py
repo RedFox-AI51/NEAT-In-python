@@ -1,4 +1,8 @@
 # SampleNetwork.py
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from NEAT.Node import Node, NodeType
 from NEAT.Connection import Connection
 from NEAT.Activations import ActivationFunctions

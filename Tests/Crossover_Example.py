@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from NEAT.Network import Network
 from NEAT.Node import Node, NodeType
 from NEAT.Connection import Connection

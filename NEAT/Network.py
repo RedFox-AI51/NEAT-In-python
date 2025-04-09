@@ -13,7 +13,7 @@ class Network:
         
         self.nodes = nodes
         self.conns = conns
-        self.fitness = 0
+        self.fitness = 0.0 # Fitness score for the network
         self.processed_nodes = set()  # Keep track of processed nodes during input propagation
 
     def run(self):

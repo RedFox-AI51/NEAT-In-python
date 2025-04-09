@@ -33,7 +33,11 @@ NEAT-In-python/
 |──── NEAT.py               # Is the simple class that brings the genome and the phenotype together
 │──── Node.py               # Manages individual nodes (neurons)
 │──── Phenotype.py          # Converts genotype into a working neural network
-│── SampleNetwork.py      # Example usage of NEAT
+|── Tests/
+│──── SampleNetwork.py      # Example usage of NEAT
+│──── Phenotype_test.py     # Network Visualization example
+│──── Crossover_Example.py  # Crossover example and testing
+│──── NEAT_XOR_test.py      # XOR task with NEAT algorithm
 │── stanley.ec02.pdf      # Original NEAT research paper
 ```
 
