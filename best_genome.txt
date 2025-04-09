@@ -3,4 +3,4 @@ Nodes:
     Output shape: 1
     Number of hidden nodes: 2
 Connections:
-['Connection(Innov=1, From=1, To=4, Weight=0.5, Enabled=False)', 'Connection(Innov=2, From=2, To=4, Weight=0.7273347514004955, Enabled=True)', 'Connection(Innov=3, From=4, To=3, Weight=0.8198253278841272, Enabled=True)', 'Connection(Innov=1, From=1, To=3, Weight=-0.59, Enabled=True)', 'Connection(Innov=5, From=1, To=5, Weight=0.05, Enabled=True)', 'Connection(Innov=6, From=5, To=4, Weight=1.9364383016000564, Enabled=True)', 'Connection(Innov=6, From=2, To=5, Weight=0.67, Enabled=True)']
+['Connection(Innov=1, From=1, To=4, Weight=1.0414491398638783, Enabled=True)', 'Connection(Innov=2, From=2, To=4, Weight=0.5, Enabled=True)', 'Connection(Innov=3, From=4, To=3, Weight=0.8, Enabled=True)', 'Connection(Innov=1, From=1, To=4, Weight=-0.19, Enabled=False)', 'Connection(Innov=3, From=3, To=4, Weight=0.76, Enabled=True)', 'Connection(Innov=6, From=1, To=5, Weight=-0.55, Enabled=True)', 'Connection(Innov=7, From=5, To=4, Weight=-0.19, Enabled=True)']

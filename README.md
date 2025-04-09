@@ -138,6 +138,9 @@ conns = [
 ]
 ```
 
+## NEAT XOR results:
+![XOR Test Result](XOR_test1.png)
+
 Where they have 2 input nodes, 1 output node and 1 hidden node.
 This is the default structure of the xor network and the NEAT algorithm will do its best to minimize its loss so it is more accurate.
 
