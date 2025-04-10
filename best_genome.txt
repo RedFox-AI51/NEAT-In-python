@@ -1,6 +1,6 @@
 Nodes:
     Input shape: 2
     Output shape: 1
-    Number of hidden nodes: 2
+    Number of hidden nodes: 1
 Connections:
-['Connection(Innov=1, From=1, To=4, Weight=1.0414491398638783, Enabled=True)', 'Connection(Innov=2, From=2, To=4, Weight=0.5, Enabled=True)', 'Connection(Innov=3, From=4, To=3, Weight=0.8, Enabled=True)', 'Connection(Innov=1, From=1, To=4, Weight=-0.19, Enabled=False)', 'Connection(Innov=3, From=3, To=4, Weight=0.76, Enabled=True)', 'Connection(Innov=6, From=1, To=5, Weight=-0.55, Enabled=True)', 'Connection(Innov=7, From=5, To=4, Weight=-0.19, Enabled=True)']
+['Connection(Innov=1, From=1, To=4, Weight=0.5, Enabled=True)', 'Connection(Innov=2, From=2, To=4, Weight=0.5, Enabled=True)', 'Connection(Innov=3, From=4, To=3, Weight=0.9517825536513218, Enabled=True)', 'Connection(Innov=1, From=1, To=4, Weight=-0.06, Enabled=True)', 'Connection(Innov=4, From=3, To=4, Weight=-0.09, Enabled=True)', 'Connection(Innov=1, From=1, To=4, Weight=0.48, Enabled=True)']

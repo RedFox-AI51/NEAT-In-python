@@ -4,6 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import random
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 from NEAT.NEAT import NEAT
 from NEAT.Network import Network
 from NEAT.Node import Node, NodeType
@@ -172,8 +173,6 @@ best_genome_path = "best_genome.txt"
 with open(best_genome_path, "w") as f:
     f.write(str(best_genome.network.summary()))
 
-import matplotlib.pyplot as plt
-
 # Create a matplotlib plot for saving as PNG
 plt.figure(figsize=(10, 6))
 plt.plot(range(GENERATIONS), avg_fitnesses, label='Avg Fitness', linestyle='--')
@@ -186,12 +185,11 @@ plt.grid(True)
 plt.tight_layout()
 
 # Save as PNG
-plt.savefig('fitness_plot.png')
-print("Fitness plot saved as fitness_plot.png")
+plt.savefig('XOR_test1.png')
+print("Fitness plot saved as XOR_test1.png")
 
 # Optional: close the plot if not displaying interactively
 plt.close()
-
 
 # Create interactive plot using plotly
 fig = go.Figure()
