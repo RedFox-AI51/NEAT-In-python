@@ -13,11 +13,16 @@ This implementation is based on the original paper by Kenneth O. Stanley, which 
 - Sample neural network implementation
 
 ## Installation
-Ensure you have Python installed on your system. Clone the repository and install dependencies (if any):
+Ensure you have Python installed on your system. Clone the repository and install dependencies:
 
 ```sh
 git clone https://github.com/RedFox-AI51/NEAT-In-python.git
 cd NEAT-In-python
+```
+
+Install the requirements as so:
+```sh
+pip install -r requirements.txt
 ```
 
 ## File Structure
