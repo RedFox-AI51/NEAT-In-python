@@ -26,6 +26,7 @@ pip install -r requirements.txt
 ```
 
 ## File Structure
+These are the files that you should get familiar with if you intend to use it on your own projects:
 ```
 NEAT-In-python/
 |── NEAT/
