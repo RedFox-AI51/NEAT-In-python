@@ -6,4 +6,4 @@ from .Node import Node, NodeType
 from .InnovationTracker import InnovationTracker
 from .Mutate import Mutate
 from .Phenotype import Phenotype
-from .NEAT import NEAT
+from .Genome import Genome

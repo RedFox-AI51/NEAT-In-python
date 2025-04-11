@@ -4,9 +4,14 @@ from .Connection import Connection
 from .Phenotype import Phenotype
 from .Mutate import Mutate
 
-class NEAT:
+import uuid
+
+class Genome:
     def __init__(self, network: Network):
+        self.id = str(uuid.uuid4())
         self.network = network
+        self.parent_ids = []
+        self.generation = 0
         self.mutator = Mutate(self.network)
         self.phenotype = Phenotype(self.network)
 
@@ -20,4 +25,4 @@ class NEAT:
     
     def copy(self):
         # Create a deep copy of the NEAT instance
-        return NEAT(self.network.copy())
+        return Genome(self.network.copy())

@@ -15,6 +15,13 @@ class Network:
         self.conns = conns
         self.fitness = 0.0 # Fitness score for the network
         self.processed_nodes = set()  # Keep track of processed nodes during input propagation
+    
+    def reset(self):
+        """Reset the network by clearing the processed nodes set."""
+        self.processed_nodes.clear()
+        # Reset all node values to 0
+        for node in self.nodes:
+            node.value = 0
 
     def run(self):
         """Run the network, processing connections layer by layer using pass_input."""
