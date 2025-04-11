@@ -112,4 +112,4 @@ class Mutate:
         for conn in self.network.conns:
             if conn.enabled:
                 if random.random() < 0.1:
-                    conn.weight = random.uniform(-2.0, 2.0)
+                    conn.weight = round(random.uniform(-2.0, 2.0), 2)

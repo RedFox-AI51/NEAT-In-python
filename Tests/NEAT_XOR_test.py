@@ -14,15 +14,19 @@ from NEAT.Crossover import Crossover
 
 import json
 
-def save_family_tree_to_file(family_tree, filename="family_tree.json"):
+base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+output_path = os.path.join(base_path, "Outputs")
+os.makedirs(output_path, exist_ok=True)
+
+def save_family_tree_to_file(family_tree, filename=os.path.join(output_path, "family_tree.json")):
     with open(filename, "w") as file:
         json.dump(family_tree, file, indent=4)
 
 # Constants
-POPULATION_SIZE = 100              # Size of the population
+POPULATION_SIZE = 10               # Size of the population
 GENERATIONS = 100                  # Number of generations to evolve
-MUTATION_RATE = 0.3                # Mutation rate for the NEAT algorithm
-ELITE_COUNT = 15                   # Number of elite genomes to carry over to the next generation
+MUTATION_RATE = 0.7                # Mutation rate for the NEAT algorithm
+ELITE_COUNT = 2                    # Number of elite genomes to carry over to the next generation
 
 family_tree = {} # Dictionary to store family tree information
 
@@ -175,14 +179,13 @@ for gen in range(GENERATIONS):
     for genome in genomes:
         genome.network.fitness = 0.0
     
-        
     # Shuffle the genomes
-    # random.shuffle(genomes)
+    random.shuffle(genomes)
 
 
 # Save the fitness data to a text file
-output_path = "fitness_summary.txt"
-with open(output_path, "w") as f:
+output_fitness = os.path.join(output_path, "fitness_summary.txt")
+with open(output_fitness, "w") as f:
     f.write("gen | avg | best\n")
     for gen in range(GENERATIONS):
         f.write(f"{gen} | {avg_fitnesses[gen]:.4f} | {best_fitnesses[gen]:.4f}\n")
@@ -190,7 +193,7 @@ with open(output_path, "w") as f:
 print(f"Fitness summary saved to {output_path}")
 
 # Save the best genome to a file
-best_genome_path = "best_genome.txt"
+best_genome_path = os.path.join(output_path, "best_genome.txt")
 with open(best_genome_path, "w") as f:
     f.write(str(best_genome.network.summary()))
 
@@ -206,7 +209,7 @@ plt.grid(True)
 plt.tight_layout()
 
 # Save as PNG
-plt.savefig('XOR_test1.png')
+plt.savefig(os.path.join(output_path, 'XOR_test1.png'))
 print("Fitness plot saved as XOR_test1.png")
 
 # Optional: close the plot if not displaying interactively
@@ -241,7 +244,7 @@ fig.update_layout(
     template="plotly_dark"
 )
 
-save_family_tree_to_file(family_tree, "family_tree.json")
+save_family_tree_to_file(family_tree)
 
 # Show the interactive plot
 fig.show()

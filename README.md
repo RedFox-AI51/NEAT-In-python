@@ -38,6 +38,11 @@ NEAT-In-python/
 │──── Phenotype_test.py     # Network Visualization example
 │──── Crossover_Example.py  # Crossover example and testing
 │──── NEAT_XOR_test.py      # XOR task with NEAT algorithm
+|── Outputs/
+│──── best_genome.txt       # Best Genome of the XOR test
+│──── family_tree.json      # Keeping track of the crossover history
+│──── fitness_summary.txt   # Fitness logging for manual graphing
+│──── XOR_test1.png         # Saved graph of the fitnesses
 │── stanley.ec02.pdf      # Original NEAT research paper
 ```
 
@@ -139,7 +144,7 @@ conns = [
 ```
 
 ## NEAT XOR results:
-![XOR Test Result](XOR_test1.png)
+![XOR Test Result](Outputs/XOR_test1.png)
 
 Where they have 2 input nodes, 1 output node and 1 hidden node.
 This is the default structure of the xor network and the NEAT algorithm will do its best to minimize its loss so it is more accurate.
