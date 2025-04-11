@@ -149,6 +149,14 @@ conns = [
 Where they have 2 input nodes, 1 output node and 1 hidden node.
 This is the default structure of the xor network and the NEAT algorithm will do its best to minimize its loss so it is more accurate.
 
+The settings for this run are:
+```python
+POPULATION_SIZE = 10               # Size of the population
+GENERATIONS = 100                  # Number of generations to evolve
+MUTATION_RATE = 0.7                # Mutation rate for the NEAT algorithm
+ELITE_COUNT = 2                    # Number of elite genomes to carry over to the next generation
+```
+
 ## Future Improvements
 - Add support for different evolutionary strategies
 - Improve efficiency with parallel processing
