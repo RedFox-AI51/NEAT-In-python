@@ -71,7 +71,7 @@ Once we test the network, we need to mutate it. We give it 10 mutations before v
 
 Heres how you can run it for yourself:
 ```sh
-python SampleNetwork.py
+python Tests/SampleNetwork.py
 ```
 
 ## Phenotype testing with: `Phenotype_test.py`
@@ -81,7 +81,7 @@ This script creates a simple network with a mix of input, hidden, and output nod
 
 Heres how you can run it for yourself:
 ```sh
-python Phenotype_test.py
+python Tests/Phenotype_test.py
 ```
 
 ## Network Crossovers with: `Crossover_example.py`
@@ -96,7 +96,7 @@ Finally at the end, it shows us all 3 networks. Parent 1, Parent 2 and the child
 
 To run it for yourself:
 ```sh
-python Crossover_Example.py
+python Tests/Crossover_Example.py
 ```
 
 ## Finally, The NEAT XOR problem with: `NEAT_XOR_test.py`
@@ -161,6 +161,11 @@ POPULATION_SIZE = 10               # Size of the population
 GENERATIONS = 100                  # Number of generations to evolve
 MUTATION_RATE = 0.7                # Mutation rate for the NEAT algorithm
 ELITE_COUNT = 2                    # Number of elite genomes to carry over to the next generation
+```
+
+To run it for yourself:
+```sh
+python Tests/NEAT_XOR_test.py
 ```
 
 ## Future Improvements
