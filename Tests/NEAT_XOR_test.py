@@ -197,6 +197,42 @@ best_genome_path = os.path.join(output_path, "best_genome.txt")
 with open(best_genome_path, "w") as f:
     f.write(str(best_genome.network.summary()))
 
+# Save the best genome to a json file for later use
+
+# Build node lists by type
+input_nodes = [node for node in best_genome.network.get_input_nodes()]
+hidden_nodes = [node for node in best_genome.network.get_hidden_nodes()]
+output_nodes = [node for node in best_genome.network.get_output_nodes()]
+
+# Build connection list
+connections = [
+    {
+        "innovation": conn.Innov,
+        "from": conn.from_node.id,
+        "to": conn.to_node.id,
+        "weight": conn.weight,
+        "enabled": conn.enabled
+    }
+    for conn in best_genome.network.conns
+]
+
+# Construct the full genome dictionary
+genome_data = {
+    "nodes": {
+        "input": [input_node.__repr__() for input_node in input_nodes],
+        "output": [output_node.__repr__() for output_node in output_nodes],
+        "hidden": [hidden_node.__repr__() for hidden_node in hidden_nodes]
+    },
+    "connections": connections,
+    "fitness": best_genome.network.fitness
+}
+
+# Save as JSON
+json_path = os.path.join(output_path, "best_genome.json")
+with open(json_path, "w") as f:
+    json.dump(genome_data, f, indent=4)
+
+
 # Create a matplotlib plot for saving as PNG
 plt.figure(figsize=(10, 6))
 plt.plot(range(GENERATIONS), avg_fitnesses, label='Avg Fitness', linestyle='--')
@@ -247,6 +283,8 @@ fig.update_layout(
 save_family_tree_to_file(family_tree)
 
 # Show the interactive plot
-fig.show()
+# fig.show()
+
+print(f"Accuracy: {100-round(abs(best_fitness), 2)}%")
 
 best_genome.phenotype.visualize()

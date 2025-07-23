@@ -87,7 +87,7 @@ class Mutate:
 
         # Create a new hidden node
         new_node_id = len(nodes) + 1
-        new_node = Node(new_node_id, NodeType.HIDDEN, random.uniform(-1.0, 1.0), ActivationFunctions.ReLu)  # ReLU activation
+        new_node = Node(new_node_id, NodeType.HIDDEN, random.uniform(-1.0, 1.0), ActivationFunctions.random_activation())  # ReLU activation
         
         # Add the new node to the network
         self.network.nodes.append(new_node)

@@ -9,17 +9,19 @@ class NodeType(Enum):
     OUTPUT = "Output"
 
 class Node:
-    def __init__(self, id: int, ntype: NodeType, value: float, activation: Optional[Callable[[float], float]] = None):
+    def __init__(self, id: int, ntype: NodeType, value: float, activation: Optional[Callable[[float], float]] = None, bias=None):
         self.id = id
         self.ntype = ntype
         self.value = value
         self.activation = activation
+        self.bias = bias
 
         # Bias should be included for both hidden and output nodes
-        if ntype in {NodeType.HIDDEN, NodeType.OUTPUT}:
-            self.bias = random.uniform(-1.0, 1.0)
-        else:
-            self.bias = 0.0  # Input nodes have no bias
+        if self.bias == None:
+            if ntype in {NodeType.HIDDEN, NodeType.OUTPUT}:
+                self.bias = random.uniform(-1.0, 1.0)
+            else:
+                self.bias = 0.0  # Input nodes have no bias
 
     def get_output(self) -> float:
         """Compute the node's output with bias and activation."""
@@ -28,6 +30,9 @@ class Node:
 
     def copy(self):
         return Node(self.id, self.ntype, self.value, self.activation)
+    
+    def __repr__(self):
+        return str({"id": self.id, "type": self.ntype.value, "value": self.value, "activation": self.activation, "bias": self.bias})
 
 if __name__ == "__main__":
     # Example Usage
